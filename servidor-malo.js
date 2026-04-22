@@ -12,8 +12,32 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.url === "/info") {
+    const info = {
+      mensaje: "Información del servidor",
+      curso: "Sistemas y Tecnologías Web",
+      tecnologia: "Node.js"
+    }
+
     res.writeHead(200, { "Content-Type": "application/json" })
-    res.end("Ruta de información")
+    res.end(JSON.stringify(info))
+    return
+  }
+
+  if (req.url === "/saludo") {
+    res.writeHead(200, { "Content-Type": "text/plain" })
+    res.end("Hola, bienvenido al servidor")
+    return
+  }
+
+  if (req.url === "/api/status") {
+    const status = {
+      ok: true,
+      status: "Servidor funcionando correctamente",
+      puerto: PORT
+    }
+
+    res.writeHead(200, { "Content-Type": "application/json" })
+    res.end(JSON.stringify(status))
     return
   }
 
@@ -28,9 +52,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   res.writeHead(404, { "Content-Type": "text/plain" })
-  res.end("Ruta no encontrada")
+  res.end(`Ruta no encontrada: ${req.url}`)
 })
 
 server.listen(PORT, () => {
-  console.log("Servidor corriendo en http://localhost:3000")
+  console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
